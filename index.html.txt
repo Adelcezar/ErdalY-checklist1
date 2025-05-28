@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategic Execution Hub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            color: #e0e6ed;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(45deg, #3b82f6, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-item {
+            padding: 10px 20px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .status-bar {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Main Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        /* Cards */
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 25px;
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-icon {
+            font-size: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+
+        /* Checklist Items */
+        .checklist {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .check-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .check-item.completed {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .check-item.failed {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox.checked {
+            background: #10b981;
+            border-color: #10b981;
+        }
+
+        .checkbox.failed {
+            background: #ef4444;
+            border-color: #ef4444;
+        }
+
+        .check-text {
+            flex: 1;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        /* Range Tracker */
+        .range-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .range-item {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .range-item:hover {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: #3b82f6;
+        }
+
+        .range-item.active {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .range-time {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-bottom: 5px;
+        }
+
+        .range-type {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        /* Community Section */
+        .community-card {
+            grid-column: 1 / -1;
+            margin-top: 20px;
+        }
+
+        .chat-area {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+        }
+
+        .chat-message {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+        }
+
+        .chat-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #3b82f6, #10b981);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .chat-content {
+            flex: 1;
+        }
+
+        .chat-user {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-bottom: 4px;
+        }
+
+        .chat-text {
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #e0e6ed;
+            font-size: 14px;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+        }
+
+        .send-btn {
+            padding: 12px 20px;
+            background: linear-gradient(45deg, #3b82f6, #10b981);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Risk Display */
+        .risk-display {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            border-radius: 12px;
+            padding: 15px 20px;
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+        }
+
+        .risk-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ef4444;
+            text-align: center;
+        }
+
+        .risk-label {
+            font-size: 12px;
+            opacity: 0.7;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        /* Floating Sidebar */
+        .floating-sidebar {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 220px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            backdrop-filter: blur(30px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-title {
+            font-size: 14px;
+            font-weight: 600;
+            background: linear-gradient(45deg, #3b82f6, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .overall-progress {
+            margin-top: 8px;
+        }
+
+        .overall-percentage {
+            font-size: 24px;
+            font-weight: 700;
+            color: #10b981;
+            text-align: center;
+            margin-bottom: 3px;
+        }
+
+        .overall-label {
+            font-size: 10px;
+            opacity: 0.7;
+            text-align: center;
+        }
+
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .task-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .task-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .task-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .task-icon {
+            font-size: 14px;
+        }
+
+        .task-name {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .task-percentage {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 3px 6px;
+            border-radius: 10px;
+            min-width: 38px;
+            text-align: center;
+        }
+
+        .task-percentage.complete {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+
+        .task-percentage.partial {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+        }
+
+        .task-percentage.incomplete {
+            background: rgba(156, 163, 175, 0.2);
+            color: #9ca3af;
+        }
+
+        .task-percentage.failed {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        .sidebar-toggle {
+            position: fixed;
+            left: 20px;
+            top: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            font-size: 16px;
+        }
+
+        .sidebar-toggle:hover {
+            background: rgba(59, 130, 246, 0.3);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+        }
+
+        .sidebar-toggle.active {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: rgba(16, 185, 129, 0.5);
+        }
+
+        .floating-sidebar.collapsed {
+            transform: translateY(-50%) translateX(-260px);
+        }
+
+        .mini-progress {
+            width: 100%;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .mini-progress-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .nav-item {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+            
+            .range-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .status-bar {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .floating-sidebar {
+                width: 200px;
+                left: 10px;
+            }
+            
+            .floating-sidebar.collapsed {
+                transform: translateY(-50%) translateX(-220px);
+            }
+            
+            .sidebar-toggle {
+                left: 10px;
+                top: 10px;
+                width: 38px;
+                height: 38px;
+                font-size: 14px;
+            }
+            
+            .risk-display {
+                right: 10px;
+                top: 10px;
+                padding: 12px 16px;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .glow {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 5px rgba(59, 130, 246, 0.5); }
+            to { box-shadow: 0 0 20px rgba(59, 130, 246, 0.8); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Toggle -->
+        <div class="sidebar-toggle" onclick="toggleSidebar()">
+            <span>📊</span>
+        </div>
+
+        <!-- Floating Sidebar -->
+        <div class="floating-sidebar" id="taskSidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-title">EXECUTION PROGRESS</div>
+                <div class="overall-progress">
+                    <div class="overall-percentage" id="overallPercentage">67%</div>
+                    <div class="overall-label">OVERALL COMPLETION</div>
+                </div>
+            </div>
+            <div class="task-list">
+                <div class="task-item">
+                    <div class="task-info">
+                        <span class="task-icon">📈</span>
+                        <span class="task-name">Trend Confirmation</span>
+                    </div>
+                    <div class="task-percentage partial" id="trendProgress">67%</div>
+                </div>
+                <div class="task-item">
+                    <div class="task-info">
+                        <span class="task-icon">⏱️</span>
+                        <span class="task-name">Range Setup</span>
+                    </div>
+                    <div class="task-percentage complete" id="rangeProgress">100%</div>
+                </div>
+                <div class="task-item">
+                    <div class="task-info">
+                        <span class="task-icon">🧠</span>
+                        <span class="task-name">Entry Signal</span>
+                    </div>
+                    <div class="task-percentage incomplete" id="entryProgress">0%</div>
+                </div>
+                <div class="task-item">
+                    <div class="task-info">
+                        <span class="task-icon">🧘</span>
+                        <span class="task-name">Discipline Check</span>
+                    </div>
+                    <div class="task-percentage partial" id="disciplineProgress">67%</div>
+                </div>
+            </div>
+            <div class="mini-progress">
+                <div class="mini-progress-fill" id="miniProgressFill" style="width: 67%; background: linear-gradient(45deg, #3b82f6, #10b981);"></div>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">⚡ ERDAL Y CHECKLIST</div>
+            <nav class="nav">
+                <div class="nav-item active">Strategy Overview</div>
+                <div class="nav-item">Execution Mode</div>
+                <div class="nav-item">Daily Checklist</div>
+            </nav>
+            <div class="status-bar">
+                <div class="status-item">
+                    <div class="status-dot"></div>
+                    NY Session Active
+                </div>
+            </div>
+        </div>
+
+        <!-- Risk Display -->
+        <div class="risk-display">
+            <div class="risk-value">2.5%</div>
+            <div class="risk-label">LIVE RISK</div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="main-grid">
+            <!-- Trend Confirmation -->
+            <div class="card fade-in">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon">📈</span>
+                        Trend Confirmation
+                    </div>
+                </div>
+                <div class="checklist">
+                    <div class="check-item completed" onclick="toggleCheck(this)">
+                        <div class="checkbox checked">✓</div>
+                        <div class="check-text">Weekly/Monthly HTF Trend Confirmed</div>
+                    </div>
+                    <div class="check-item completed" onclick="toggleCheck(this)">
+                        <div class="checkbox checked">✓</div>
+                        <div class="check-text">Key Institutional Level Tapped</div>
+                    </div>
+                    <div class="check-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <div class="check-text">Liquidity Cleared → Trade Trigger Enabled</div>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 67%; background: linear-gradient(45deg, #10b981, #3b82f6);"></div>
+                </div>
+            </div>
+
+            <!-- Candle Range Setup -->
+            <div class="card fade-in">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon">⏱️</span>
+                        Candle Range Setup
+                    </div>
+                </div>
+                <div class="range-grid">
+                    <div class="range-item active" onclick="toggleRange(this)">
+                        <div class="range-time">05:00 & 11:00</div>
+                        <div class="range-type">6H</div>
+                    </div>
+                    <div class="range-item" onclick="toggleRange(this)">
+                        <div class="range-time">01:00 & 09:00</div>
+                        <div class="range-type">8H</div>
+                    </div>
+                    <div class="range-item" onclick="toggleRange(this)">
+                        <div class="range-time">05:00 only</div>
+                        <div class="range-type">12H</div>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 100%; background: linear-gradient(45deg, #10b981, #3b82f6);"></div>
+                </div>
+            </div>
+
+            <!-- Entry After Manipulation -->
+            <div class="card fade-in">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon">🧠</span>
+                        Entry After Manipulation
+                    </div>
+                </div>
+                <div class="checklist">
+                    <div class="check-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <div class="check-text">Price swept previous liquidity</div>
+                    </div>
+                    <div class="check-item failed" onclick="toggleCheck(this)">
+                        <div class="checkbox failed">✗</div>
+                        <div class="check-text">Price flipped BPR zone</div>
+                    </div>
+                    <div class="check-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <div class="check-text">Stop hunt (Turtle Soup) confirmed</div>
+                    </div>
+                    <div class="check-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <div class="check-text">Risk allocation set & trailing stop active</div>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 0%; background: linear-gradient(45deg, #ef4444, #f59e0b);"></div>
+                </div>
+            </div>
+
+            <!-- Discipline Zone -->
+            <div class="card fade-in">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon">🧘</span>
+                        Discipline & Focus
+                    </div>
+                </div>
+                <div class="checklist">
+                    <div class="check-item completed" onclick="toggleCheck(this)">
+                        <div class="checkbox checked">✓</div>
+                        <div class="check-text">Daily journal input completed</div>
+                    </div>
+                    <div class="check-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <div class="check-text">Peer-verified checklist</div>
+                    </div>
+                    <div class="check-item completed" onclick="toggleCheck(this)">
+                        <div class="checkbox checked">✓</div>
+                        <div class="check-text">Risk parameters double-checked</div>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 67%; background: linear-gradient(45deg, #10b981, #06b6d4);"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Community Section -->
+        <div class="card community-card fade-in">
+            <div class="card-header">
+                <div class="card-title">
+                    <span class="card-icon">💬</span>
+                    Community Sync
+                </div>
+            </div>
+            <div class="chat-area">
+                <div class="chat-message">
+                    <div class="chat-avatar">JM</div>
+                    <div class="chat-content">
+                        <div class="chat-user">Jason_Trader • 2m ago</div>
+                        <div class="chat-text">EUR/USD showing strong rejection at 1.0850 resistance. Watching for NY session break.</div>
+                    </div>
+                </div>
+                <div class="chat-message">
+                    <div class="chat-avatar">SK</div>
+                    <div class="chat-content">
+                        <div class="chat-user">Sarah_K • 5m ago</div>
+                        <div class="chat-text">Liquidity swept on GBP/USD 4H. Looking for BPR flip confirmation.</div>
+                    </div>
+                </div>
+                <div class="chat-message">
+                    <div class="chat-avatar">MT</div>
+                    <div class="chat-content">
+                        <div class="chat-user">Mike_T • 8m ago</div>
+                        <div class="chat-text">Risk off today. Dollar strength across all majors.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="input-area">
+                <input type="text" class="chat-input" placeholder="Share quick setup or warning..." maxlength="100">
+                <button class="send-btn" onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle sidebar visibility
+        function toggleSidebar() {
+            const sidebar = document.getElementById('taskSidebar');
+            const toggle = document.querySelector('.sidebar-toggle');
+            
+            sidebar.classList.toggle('collapsed');
+            toggle.classList.toggle('active');
+        }
+
+        // Update sidebar progress
+        function updateSidebarProgress() {
+            const cards = document.querySelectorAll('.card:not(.community-card)');
+            const progressData = [];
+            let totalProgress = 0;
+            
+            cards.forEach((card, index) => {
+                const checkItems = card.querySelectorAll('.check-item');
+                const completedItems = card.querySelectorAll('.check-item.completed');
+                const failedItems = card.querySelectorAll('.check-item.failed');
+                const activeRanges = card.querySelectorAll('.range-item.active');
+                
+                let progress = 0;
+                
+                if (checkItems.length > 0) {
+                    progress = (completedItems.length / checkItems.length) * 100;
+                } else if (activeRanges.length > 0) {
+                    progress = 100; // 100% when any range is selected
+                }
+                
+                progressData.push({
+                    progress: Math.round(progress),
+                    hasFailed: failedItems.length > 0
+                });
+                
+                totalProgress += progress;
+            });
+            
+            // Update individual task progress
+            const taskElements = [
+                { id: 'trendProgress', data: progressData[0] },
+                { id: 'rangeProgress', data: progressData[1] },
+                { id: 'entryProgress', data: progressData[2] },
+                { id: 'disciplineProgress', data: progressData[3] }
+            ];
+            
+            taskElements.forEach(task => {
+                const element = document.getElementById(task.id);
+                if (element && task.data) {
+                    element.textContent = task.data.progress + '%';
+                    
+                    // Remove all classes
+                    element.classList.remove('complete', 'partial', 'incomplete', 'failed');
+                    
+                    // Add appropriate class
+                    if (task.data.hasFailed) {
+                        element.classList.add('failed');
+                    } else if (task.data.progress === 100) {
+                        element.classList.add('complete');
+                    } else if (task.data.progress > 0) {
+                        element.classList.add('partial');
+                    } else {
+                        element.classList.add('incomplete');
+                    }
+                }
+            });
+            
+            // Update overall progress
+            const overallProgress = Math.round(totalProgress / cards.length);
+            const overallElement = document.getElementById('overallPercentage');
+            const miniProgressFill = document.getElementById('miniProgressFill');
+            
+            if (overallElement) {
+                overallElement.textContent = overallProgress + '%';
+                
+                // Change color based on progress
+                if (overallProgress >= 80) {
+                    overallElement.style.color = '#10b981';
+                } else if (overallProgress >= 50) {
+                    overallElement.style.color = '#3b82f6';
+                } else if (overallProgress >= 25) {
+                    overallElement.style.color = '#f59e0b';
+                } else {
+                    overallElement.style.color = '#ef4444';
+                }
+            }
+            
+            if (miniProgressFill) {
+                miniProgressFill.style.width = overallProgress + '%';
+            }
+        }
+
+        // Toggle checkbox states
+        function toggleCheck(item) {
+            const checkbox = item.querySelector('.checkbox');
+            const isChecked = checkbox.classList.contains('checked');
+            const isFailed = checkbox.classList.contains('failed');
+            
+            // Reset states
+            item.classList.remove('completed', 'failed');
+            checkbox.classList.remove('checked', 'failed');
+            checkbox.innerHTML = '';
+            
+            if (!isChecked && !isFailed) {
+                // Set to checked
+                item.classList.add('completed');
+                checkbox.classList.add('checked');
+                checkbox.innerHTML = '✓';
+            } else if (isChecked) {
+                // Set to failed
+                item.classList.add('failed');
+                checkbox.classList.add('failed');
+                checkbox.innerHTML = '✗';
+            }
+            // If failed, reset to unchecked (already done above)
+            
+            updateProgress();
+            updateSidebarProgress();
+            updateSidebarProgress();
+        }
+
+        // Toggle range selection
+        function toggleRange(item) {
+            // Remove active from all ranges
+            document.querySelectorAll('.range-item').forEach(range => {
+                range.classList.remove('active');
+            });
+            
+            // Add active to clicked range
+            item.classList.add('active');
+            
+            updateProgress();
+            updateSidebarProgress();
+        }
+
+        // Update progress bars
+        function updateProgress() {
+            const cards = document.querySelectorAll('.card:not(.community-card)');
+            
+            cards.forEach(card => {
+                const checkItems = card.querySelectorAll('.check-item');
+                const completedItems = card.querySelectorAll('.check-item.completed');
+                const activeRanges = card.querySelectorAll('.range-item.active');
+                
+                let progress = 0;
+                
+                if (checkItems.length > 0) {
+                    progress = (completedItems.length / checkItems.length) * 100;
+                } else if (activeRanges.length > 0) {
+                    progress = 100; // 100% when any range is selected
+                }
+                
+                const progressFill = card.querySelector('.progress-fill');
+                if (progressFill) {
+                    progressFill.style.width = progress + '%';
+                }
+            });
+        }
+
+        // Send chat message
+        function sendMessage() {
+            const input = document.querySelector('.chat-input');
+            const message = input.value.trim();
+            
+            if (message) {
+                const chatArea = document.querySelector('.chat-area');
+                const newMessage = document.createElement('div');
+                newMessage.className = 'chat-message';
+                newMessage.innerHTML = `
+                    <div class="chat-avatar">YU</div>
+                    <div class="chat-content">
+                        <div class="chat-user">You • now</div>
+                        <div class="chat-text">${message}</div>
+                    </div>
+                `;
+                
+                chatArea.appendChild(newMessage);
+                chatArea.scrollTop = chatArea.scrollHeight;
+                input.value = '';
+            }
+        }
+
+        // Enter key for chat
+        document.querySelector('.chat-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Nav item switching
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Real-time updates simulation
+        setInterval(() => {
+            const riskValue = document.querySelector('.risk-value');
+            const currentRisk = parseFloat(riskValue.textContent);
+            const newRisk = (currentRisk + (Math.random() - 0.5) * 0.1).toFixed(1);
+            riskValue.textContent = newRisk + '%';
+            
+            // Change color based on risk level
+            if (newRisk > 3) {
+                riskValue.style.color = '#ef4444';
+            } else if (newRisk > 2) {
+                riskValue.style.color = '#f59e0b';
+            } else {
+                riskValue.style.color = '#10b981';
+            }
+        }, 5000);
+
+        // Initialize
+        updateProgress();
+        updateSidebarProgress();
+    </script>
+</body>
+</html>
